@@ -277,6 +277,19 @@ textarea { width: 100%; padding: 12px 14px; resize: vertical; line-height: 1.45;
 .tpl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 12px; }
 .tpl { display: grid; gap: 10px; padding: 16px; border-radius: 20px; background: rgba(255, 255, 255, 0.55); border: 1px solid var(--glass-edge); }
 .tpl h3 { margin: 0; font-size: 17px; font-weight: 750; }
+/* premade programs (Routines → Premade, and Train before you have routines) */
+.routines-seg { justify-self: start; align-self: flex-start; }
+.program { display: grid; gap: 12px; }
+.program-head { align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+.program-head p { margin: 4px 0 0; }
+.program-how { margin: 0; color: var(--ink-2); }
+/* Premade cards also list their exercises; keep the Add buttons level across a row */
+.premade .tpl { grid-template-rows: auto auto 1fr auto; }
+.premade .tpl-items { align-content: start; }
+.tpl-items { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 14px; }
+.tpl-items li { display: flex; justify-content: space-between; gap: 10px; }
+.tpl-items li span:first-child { min-width: 0; }
+.tpl-items .num { flex: none; }
 .summary { border-color: rgba(var(--coral-rgb), 0.35); background: rgba(255, 255, 255, 0.7); }
 .prs { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
 .prs strong { display: inline-block; padding: 3px 10px; margin-right: 6px; border-radius: 999px; background: var(--coral); color: #fff; font-size: 12.5px; font-weight: 750; }

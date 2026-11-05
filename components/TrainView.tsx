@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import { api } from "@/lib/api";
 import { muscleSets, normalise } from "@/lib/stats";
-import { TEMPLATES } from "@/lib/templates";
 import { formatDuration, formatRelative } from "@/lib/time";
 import type { Routine } from "@/lib/types";
 import { fmtBig, fmtWeight, toUnit } from "@/lib/units";
@@ -14,6 +13,7 @@ import { BodyWeightChip } from "./BodyWeight";
 import { SportRow } from "./Sports";
 import Logger, { type FinishSummary } from "./Logger";
 import Activity from "./Activity";
+import PremadePrograms from "./Premade";
 
 export default function TrainView() {
   const { data } = useApp();
@@ -64,7 +64,7 @@ function lastDoneText(date: string, today: string) {
 }
 
 function StartPanel() {
-  const { data, setData, attempt, catalog, editRoutine, today, notify, openPastWorkout } = useApp();
+  const { data, setData, attempt, catalog, editRoutine, today, openPastWorkout } = useApp();
   const [busy, setBusy] = useState(false);
 
   const lastDone = useMemo(() => {
@@ -78,16 +78,6 @@ function StartPanel() {
     const session = await attempt(() => api.startSession(r?.id ?? null, r ? undefined : "Workout"));
     setBusy(false);
     if (session) setData((d) => d && { ...d, activeSession: session });
-  };
-
-  const useTemplate = async (t: (typeof TEMPLATES)[number]) => {
-    setBusy(true);
-    const r = await attempt(() => api.createRoutine(t.name, t.items));
-    setBusy(false);
-    if (r) {
-      setData((d) => d && { ...d, routines: [...d.routines, r] });
-      notify(`${t.name} routine added. Edit it any time under Routines.`);
-    }
   };
 
   const newRoutine = async () => {
@@ -132,40 +122,26 @@ function StartPanel() {
       </div>
 
       {data.routines.length === 0 ? (
-        <section className="glass panel" aria-labelledby="tpl-title">
-          <h2 id="tpl-title" className="subtitle">Pick a starting routine</h2>
-          <p className="muted">
-            Each one is a ready-made list of exercises with sets and reps. Change anything afterwards, or build your own from the body map.
-          </p>
-          <div className="tpl-grid">
-            {TEMPLATES.map((t) => {
-              const load = normalise(muscleSets(t.items.map((i) => ({ exerciseId: i.exerciseId, sets: i.sets })), catalog));
-              return (
-                <article key={t.name} className="tpl">
-                  <BodyMap label={`Muscles in ${t.name}`} intensity={load} compact />
-                  <div>
-                    <h3>{t.name}</h3>
-                    <p className="muted">{t.blurb}</p>
-                  </div>
-                  <button className="btn btn-glass" onClick={() => useTemplate(t)} disabled={busy}>
-                    Use {t.name}
-                  </button>
-                </article>
-              );
-            })}
-          </div>
-          <div className="row-gap">
-            <button className="btn btn-chalk" onClick={newRoutine}>
-              Build my own routine
-            </button>
-            <button className="btn btn-ghost" onClick={() => start(null)} disabled={busy}>
-              Just log a workout
-            </button>
-            <button className="btn btn-ghost" onClick={() => openPastWorkout()}>
-              Log a past workout
-            </button>
-          </div>
-        </section>
+        <>
+          <section className="glass panel" aria-labelledby="tpl-title">
+            <h2 id="tpl-title" className="subtitle">Pick a starting routine</h2>
+            <p className="muted">
+              Add one of the premade routines below, or build your own from the body map. Everything can be changed afterwards.
+            </p>
+            <div className="row-gap">
+              <button className="btn btn-chalk" onClick={newRoutine}>
+                Build my own routine
+              </button>
+              <button className="btn btn-ghost" onClick={() => start(null)} disabled={busy}>
+                Just log a workout
+              </button>
+              <button className="btn btn-ghost" onClick={() => openPastWorkout()}>
+                Log a past workout
+              </button>
+            </div>
+          </section>
+          <PremadePrograms />
+        </>
       ) : (
         <ul className="start-list">
           {data.routines.map((r) => {

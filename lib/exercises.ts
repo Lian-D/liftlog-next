@@ -35,6 +35,8 @@ export type Exercise = {
 type Def = Omit<Exercise, "image" | "measure" | "secondary"> & {
   measure?: Measure;
   secondary?: Muscle[];
+  /** false for exercises with no drawing in the image set; they show initials instead */
+  image?: boolean;
 };
 
 const d = (e: Def): Exercise => ({ measure: "weight", secondary: [], image: true, ...e });
@@ -168,6 +170,52 @@ export const EXERCISES: Exercise[] = [
     ],
   }),
 
+  d({
+    id: "decline-bench-press", name: "Decline Barbell Bench Press", equipment: "Barbell",
+    primary: ["chest"], secondary: ["triceps", "shoulders"], sets: 3, reps: 8,
+    steps: [
+      "Hook your legs under the pads of a decline bench and lie back with your eyes under the bar.",
+      "Grip slightly wider than shoulder width and set your shoulder blades back and down.",
+      "Unrack and hold the bar over your lower chest with straight arms.",
+      "Lower it under control to the bottom of your chest.",
+      "Press back up until your arms are straight.",
+    ],
+    cues: ["A spotter helps here: racking the bar from a decline is awkward.", "Keep the decline mild (15–30°)."],
+  }),
+  d({
+    id: "machine-chest-press", name: "Machine Chest Press", equipment: "Machine",
+    primary: ["chest"], secondary: ["triceps", "shoulders"], sets: 3, reps: 10,
+    steps: [
+      "Set the seat so the handles line up with your mid-chest.",
+      "Sit with your back against the pad and grip the handles.",
+      "Press forward until your arms are straight, without locking out hard.",
+      "Return slowly until you feel a stretch across your chest.",
+    ],
+    cues: ["Keep your shoulder blades pinned to the pad.", "A good place to push close to failure safely."],
+  }),
+  d({
+    id: "incline-dumbbell-fly", name: "Incline Dumbbell Fly", equipment: "Dumbbell",
+    primary: ["chest"], secondary: ["shoulders"], sets: 3, reps: 12,
+    steps: [
+      "Lie on a bench set to 30–45° with a dumbbell in each hand over your upper chest, palms facing.",
+      "With a slight bend in your elbows, open your arms in a wide arc.",
+      "Stop when you feel a stretch across your chest, about level with the bench.",
+      "Squeeze the dumbbells back up along the same arc.",
+    ],
+    cues: ["Keep the elbow bend fixed: it's a hug, not a press.", "Go lighter than you would for presses."],
+  }),
+  d({
+    id: "dumbbell-pullover", name: "Dumbbell Pullover", equipment: "Dumbbell",
+    primary: ["chest", "back"], secondary: ["triceps", "abs"], sets: 3, reps: 12,
+    steps: [
+      "Lie across or along a bench holding one dumbbell over your chest with both hands.",
+      "With a slight bend in your elbows, lower it back behind your head in an arc.",
+      "Stop when your arms are in line with your body and you feel a stretch.",
+      "Pull it back over your chest along the same arc.",
+    ],
+    cues: ["Keep your ribs down; don't arch to get more range.", "Cup the inside of the top plate with both palms."],
+  }),
+
   // ---------------- Shoulders ----------------
   d({
     id: "seated-overhead-press", name: "Seated Barbell Overhead Press", equipment: "Barbell",
@@ -237,6 +285,41 @@ export const EXERCISES: Exercise[] = [
       "Targets the rear delts and upper back, which most pressing neglects.",
       "Use light weights and pause at the top.",
     ],
+  }),
+
+  d({
+    id: "overhead-press", name: "Standing Barbell Overhead Press", equipment: "Barbell", image: false,
+    aliases: ["ohp", "military press", "press", "shoulder press"],
+    primary: ["shoulders"], secondary: ["triceps", "traps", "abs"], sets: 3, reps: 5,
+    steps: [
+      "Set the bar in a rack at upper-chest height and grip it just wider than your shoulders.",
+      "Unrack it onto the front of your shoulders and step back, feet about hip width apart.",
+      "Brace your abs and glutes, then press the bar straight up, moving your head back out of the way.",
+      "Lock out overhead with the bar over your mid-foot, then lower it back to your shoulders.",
+    ],
+    cues: ["Squeeze your glutes so you don't lean back.", "Push your head through once the bar passes your forehead."],
+  }),
+  d({
+    id: "upright-row", name: "Barbell Upright Row", equipment: "Barbell",
+    primary: ["shoulders", "traps"], secondary: ["biceps"], sets: 3, reps: 12,
+    steps: [
+      "Stand holding a barbell in front of your thighs with an overhand grip, hands about shoulder width.",
+      "Lead with your elbows and pull the bar up close to your body.",
+      "Stop when your elbows are at shoulder height.",
+      "Lower it under control.",
+    ],
+    cues: ["A wider grip is kinder to the shoulders.", "Stop at shoulder height; higher pinches the joint."],
+  }),
+  d({
+    id: "face-pull", name: "Face Pull", equipment: "Cable", image: false,
+    primary: ["shoulders"], secondary: ["traps", "back"], sets: 3, reps: 15,
+    steps: [
+      "Set a rope on a cable at head height and grip it with thumbs pointing back toward you.",
+      "Step back so the weight is off the stack, arms straight in front of you.",
+      "Pull the rope toward your face, splitting it apart and pulling your hands past your ears.",
+      "Pause, then let it back out slowly.",
+    ],
+    cues: ["Elbows high, ending like a double-biceps pose.", "Light and controlled: it's for your rear delts and shoulder health."],
   }),
 
   // ---------------- Traps ----------------
@@ -389,6 +472,31 @@ export const EXERCISES: Exercise[] = [
     cues: ["Your elbows stay nearly locked, so the lats do all the work."],
   }),
 
+  d({
+    id: "inverted-row", name: "Inverted Row", equipment: "Bar", measure: "bodyweight",
+    aliases: ["body row", "australian pull-up"],
+    primary: ["back"], secondary: ["biceps", "shoulders"], sets: 3, reps: 10,
+    steps: [
+      "Set a bar at about hip height in a rack or Smith machine and lie underneath it.",
+      "Grip it slightly wider than your shoulders and straighten your body, heels on the floor.",
+      "Pull your chest up to the bar, squeezing your shoulder blades together.",
+      "Lower until your arms are straight.",
+    ],
+    cues: ["Keep a straight line from head to heels.", "Lower the bar or bend your knees to make it easier."],
+  }),
+  d({
+    id: "close-grip-lat-pulldown", name: "Close-Grip Lat Pulldown", equipment: "Cable",
+    aliases: ["v-bar pulldown"],
+    primary: ["back"], secondary: ["biceps"], sets: 3, reps: 10,
+    steps: [
+      "Attach a V-bar to the high pulley and sit with your thighs under the pads.",
+      "Grip the handles with palms facing and arms straight overhead.",
+      "Pull the handle to your upper chest, leaning back slightly and driving your elbows down.",
+      "Let it rise under control until your arms are straight.",
+    ],
+    cues: ["Think of pulling with your elbows, not your hands."],
+  }),
+
   // ---------------- Lower back ----------------
   d({
     id: "back-extension", name: "Back Extension", equipment: "Hyperextension bench", measure: "bodyweight",
@@ -512,6 +620,17 @@ export const EXERCISES: Exercise[] = [
     cues: ["The long stretch at the bottom means lighter weights than standing curls."],
   }),
 
+  d({
+    id: "ez-bar-curl", name: "EZ-Bar Curl", equipment: "Barbell",
+    primary: ["biceps"], secondary: ["forearms"], sets: 3, reps: 10,
+    steps: [
+      "Stand holding an EZ bar on the angled grips, palms up, arms straight.",
+      "Keep your elbows at your sides and curl the bar up to your shoulders.",
+      "Squeeze, then lower it slowly until your arms are straight.",
+    ],
+    cues: ["The angled grip is easier on the wrists than a straight bar.", "No swinging: keep your torso still."],
+  }),
+
   // ---------------- Triceps ----------------
   d({
     id: "rope-pushdown", name: "Rope Pushdown", equipment: "Cable",
@@ -595,6 +714,18 @@ export const EXERCISES: Exercise[] = [
       "Keep your back close to the bench.",
       "Bent knees make it easier; feet on a second bench make it harder.",
     ],
+  }),
+
+  d({
+    id: "diamond-push-up", name: "Diamond Push-Up", equipment: "Bodyweight", measure: "bodyweight",
+    aliases: ["close-grip push-up", "triangle push-up"],
+    primary: ["triceps"], secondary: ["chest", "shoulders"], sets: 3, reps: 10,
+    steps: [
+      "Get into a push-up position with your hands close together under your chest.",
+      "Lower your chest toward your hands, keeping your elbows close to your sides.",
+      "Press back up until your arms are straight.",
+    ],
+    cues: ["Keep your body in a straight line.", "Drop to your knees if you can't get full reps."],
   }),
 
   // ---------------- Forearms ----------------
@@ -716,6 +847,54 @@ export const EXERCISES: Exercise[] = [
     cues: ["Let the top leg do the work rather than pushing off the bottom foot."],
   }),
 
+  d({
+    id: "smith-machine-squat", name: "Smith Machine Squat", equipment: "Machine",
+    primary: ["quads", "glutes"], secondary: ["hamstrings"], sets: 3, reps: 10,
+    steps: [
+      "Set the bar at upper-chest height and step under it so it rests across your upper back.",
+      "Place your feet slightly in front of the bar, shoulder width apart, and unhook it.",
+      "Sit down and back until your thighs are at least parallel to the floor.",
+      "Drive back up through your whole foot and re-hook the bar when you're done.",
+    ],
+    cues: ["Set the safety stops just below your lowest point.", "Feet a little forward lets you sit back on the fixed bar path."],
+  }),
+  d({
+    id: "goblet-squat", name: "Goblet Squat", equipment: "Dumbbell", image: false,
+    aliases: ["kettlebell squat"],
+    primary: ["quads", "glutes"], secondary: ["abs"], sets: 3, reps: 10,
+    steps: [
+      "Hold one dumbbell (or kettlebell) vertically against your chest, both hands under the top end.",
+      "Stand with your feet just wider than your shoulders, toes turned out a little.",
+      "Squat down between your knees, keeping your chest up and elbows inside your knees.",
+      "Stand back up through your whole foot.",
+    ],
+    cues: ["A great way to learn the squat before loading a barbell."],
+  }),
+  d({
+    id: "bulgarian-split-squat", name: "Bulgarian Split Squat", equipment: "Dumbbell", image: false,
+    aliases: ["rear-foot elevated split squat", "rfess"],
+    primary: ["quads", "glutes"], secondary: ["hamstrings"], sets: 3, reps: 10,
+    steps: [
+      "Stand a stride in front of a bench, holding dumbbells at your sides, and rest the top of your back foot on it.",
+      "Lower straight down until your back knee nearly touches the floor.",
+      "Drive up through your front foot.",
+      "Finish the set, then switch legs.",
+    ],
+    cues: ["Lean forward slightly for more glutes, stay upright for more quads.", "Log reps per leg."],
+  }),
+  d({
+    id: "dumbbell-sumo-squat", name: "Dumbbell Sumo Squat", equipment: "Dumbbell",
+    aliases: ["plie squat"],
+    primary: ["quads", "glutes"], secondary: ["hamstrings"], sets: 3, reps: 12,
+    steps: [
+      "Stand with your feet wide and toes turned out, holding one dumbbell by its end between your legs.",
+      "Squat straight down, pushing your knees out over your toes.",
+      "Go as low as you can with a straight back.",
+      "Stand back up, squeezing your glutes at the top.",
+    ],
+    cues: ["Stand on two plates or steps to let the dumbbell go lower."],
+  }),
+
   // ---------------- Hamstrings ----------------
   d({
     id: "romanian-deadlift", name: "Romanian Deadlift", equipment: "Barbell",
@@ -789,6 +968,30 @@ export const EXERCISES: Exercise[] = [
     cues: ["Leaning forward slightly shifts more of the work to your glutes."],
   }),
 
+  d({
+    id: "hip-thrust", name: "Barbell Hip Thrust", equipment: "Barbell", image: false,
+    aliases: ["glute bridge barbell"],
+    primary: ["glutes"], secondary: ["hamstrings"], sets: 3, reps: 10,
+    steps: [
+      "Sit on the floor with your upper back against a bench and a padded barbell over your hips.",
+      "Plant your feet about hip width apart so your shins are vertical at the top.",
+      "Drive through your heels to lift your hips until your body is flat from knees to shoulders.",
+      "Squeeze your glutes, then lower under control.",
+    ],
+    cues: ["Tuck your chin and keep your ribs down; don't arch at the top.", "Use a bar pad or folded mat."],
+  }),
+  d({
+    id: "hip-adduction", name: "Hip Adduction Machine", equipment: "Machine",
+    aliases: ["adductor", "inner thigh"],
+    primary: ["glutes"], secondary: ["quads"], sets: 3, reps: 15,
+    steps: [
+      "Sit in the machine with the pads against the inside of your knees.",
+      "Squeeze your legs together until the pads meet.",
+      "Pause, then let them open slowly.",
+    ],
+    cues: ["Sit tall and keep your back against the pad."],
+  }),
+
   // ---------------- Calves ----------------
   d({
     id: "standing-calf-raise", name: "Standing Calf Raise", equipment: "Machine",
@@ -811,6 +1014,18 @@ export const EXERCISES: Exercise[] = [
       "Pause, then lower slowly.",
     ],
     cues: ["With bent knees this works the soleus, the deeper calf muscle."],
+  }),
+
+  d({
+    id: "leg-press-calf-raise", name: "Leg Press Calf Raise", equipment: "Machine",
+    primary: ["calves"], sets: 3, reps: 15,
+    steps: [
+      "Sit in the leg press and place the balls of your feet on the bottom edge of the platform.",
+      "Straighten your legs and release the safety catches.",
+      "Let your heels drop back for a full stretch, then push the platform away with your toes.",
+      "Keep your knees straight throughout.",
+    ],
+    cues: ["Keep the safeties within reach in case a foot slips.", "Pause at the stretch."],
   }),
 
   // ---------------- Abs & obliques ----------------
@@ -890,6 +1105,50 @@ export const EXERCISES: Exercise[] = [
       "Finish the set, then switch sides.",
     ],
     cues: ["Move only side to side, without leaning forward or back."],
+  }),
+
+  d({
+    id: "plank", name: "Plank", equipment: "Bodyweight", measure: "time", image: false,
+    primary: ["abs"], secondary: ["obliques", "shoulders", "glutes"], sets: 3, reps: 45,
+    steps: [
+      "Rest on your forearms and toes, elbows under your shoulders.",
+      "Make a straight line from head to heels by bracing your abs and squeezing your glutes.",
+      "Hold, breathing normally.",
+    ],
+    cues: ["Don't let your hips sag or rise."],
+  }),
+  d({
+    id: "reverse-crunch", name: "Reverse Crunch", equipment: "Bodyweight", measure: "bodyweight",
+    aliases: ["hip raise"],
+    primary: ["abs"], sets: 3, reps: 15,
+    steps: [
+      "Lie on your back with your knees bent and your hands by your sides.",
+      "Curl your hips off the floor, bringing your knees toward your chest.",
+      "Lower slowly until your feet nearly touch the floor.",
+    ],
+    cues: ["Roll your pelvis up rather than swinging your legs."],
+  }),
+  d({
+    id: "decline-crunch", name: "Decline Crunch", equipment: "Bench", measure: "bodyweight",
+    primary: ["abs"], sets: 3, reps: 12,
+    steps: [
+      "Hook your feet under the pads of a decline bench and lie back.",
+      "Cross your arms over your chest or hold a plate.",
+      "Curl your shoulders and upper back up toward your knees.",
+      "Lower under control without resting at the bottom.",
+    ],
+    cues: ["Breathe out as you curl up.", "Hold a plate on your chest to add weight."],
+  }),
+  d({
+    id: "hanging-leg-raise", name: "Hanging Leg Raise", equipment: "Pull-up bar", measure: "bodyweight", image: false,
+    aliases: ["hanging knee raise"],
+    primary: ["abs"], secondary: ["forearms"], sets: 3, reps: 10,
+    steps: [
+      "Hang from a pull-up bar with straight arms.",
+      "Raise your legs in front of you until they're at least level with your hips.",
+      "Lower them slowly without swinging.",
+    ],
+    cues: ["Bend your knees to make it easier.", "Curl your pelvis up at the top for more abs."],
   }),
 
   // ---------------- Cardio machines ----------------

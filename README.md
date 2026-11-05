@@ -14,6 +14,8 @@ Taken with the sample data from [Try it with sample data](#try-it-with-sample-da
 
 ![Routine editor with the Cardio filter on and a Stair Climber added as bouts and minutes](docs/screenshots/routine-editor.png)
 
+![Premade routines: StrongLifts 5×5 workouts A and B ready to add](docs/screenshots/premade.png)
+
 ![Progress: year heatmap and estimated one-rep-max chart](docs/screenshots/progress.png)
 
 ![History: heatmap, filters and workouts and sports by month](docs/screenshots/history.png)
@@ -120,11 +122,11 @@ Weights are stored in kg and converted for display, so switching between lb and 
 
 ## Using it
 
-**Train.** Your routines come first, each with a Start button, so you can begin without scrolling. The routine you did longest ago is marked **Up next**. Next to them: **Empty workout**, **Past workout** (see below), **+** for a new routine, the **Log a sport** row, and your latest bodyweight by your name (tap it to weigh in). Below, "Your activity" shows this week's workouts and sports (blue dots are sport days), your volume against the last 8 weeks, your streak in weeks (sports count), and your last workout or sport. With no routines yet, you get Push, Pull, Legs and Full body templates.
+**Train.** Your routines come first, each with a Start button, so you can begin without scrolling. The routine you did longest ago is marked **Up next**. Next to them: **Empty workout**, **Past workout** (see below), **+** for a new routine, the **Log a sport** row, and your latest bodyweight by your name (tap it to weigh in). Below, "Your activity" shows this week's workouts and sports (blue dots are sport days), your volume against the last 8 weeks, your streak in weeks (sports count), and your last workout or sport. With no routines yet, it offers the premade routines instead.
 
 **Past workouts.** Forgot to log one? **Past workout** on Train, **Log a past workout** on History, or tap a past day on the year heatmap. Pick the day, start time and length, and a routine or an empty workout, then tick the sets you did and **Finish**. It's saved on that day, so History, the heatmap, streaks and charts all count it. While logging it the rest timer stays off, and you can still change its day, time and length at the top.
 
-**Routines.** Create a routine, then tap muscles on the body map to list exercises for them and add the ones you want. Muscles fill in coral as the routine covers more sets for them, and the routine lists the muscles it doesn't touch. Tap **Cardio** above the exercise list to see the cardio machines (searching "stair stepper", "cycling" or "treadmill" finds them too); they're added as bouts × minutes. Set the sets and reps for each exercise; changes save as you go. The ⏱ chip under the routine's name sets its rest between sets, and the chip on each exercise overrides that for just that exercise (say 3:00 for squats, 1:00 for curls). Coral chips are set there; grey ones follow the level above.
+**Routines.** **My routines** lists yours; **Premade** has ready-made ones to copy in: Push / Pull / Legs, StrongLifts 5×5 (workouts A and B, five sets of five with 3:00 rest), Upper / Lower and Full body, each with how to run it week to week. Add one routine or a whole program; the copy is yours to change. Or create a routine, then tap muscles on the body map to list exercises for them and add the ones you want. Muscles fill in coral as the routine covers more sets for them, and the routine lists the muscles it doesn't touch. Tap **Cardio** above the exercise list to see the cardio machines (searching "stair stepper", "cycling" or "treadmill" finds them too); they're added as bouts × minutes. Set the sets and reps for each exercise; changes save as you go. The ⏱ chip under the routine's name sets its rest between sets, and the chip on each exercise overrides that for just that exercise (say 3:00 for squats, 1:00 for curls). Coral chips are set there; grey ones follow the level above.
 
 **Logging.** Each exercise gets its target number of sets with the reps already filled in. Enter the weight and tap ✓:
 
@@ -164,7 +166,7 @@ Times can be typed as 1:30:00, 45:10 or just 90 (minutes). Distances are km or m
 
 **History.** Every finished workout, newest first and grouped by month, with sets, volume and time for each. Filter by routine, or use the year heatmap at the top as a calendar: click a day, or move to it with the arrow keys and press Enter. Opening a workout shows when it started and ended, your notes, and every set (with its note) of every exercise with its estimated 1RM. The best set of each exercise is marked, and **New best** flags lifts that beat everything before that day. From there you can **Repeat this workout**, which starts a new one with the same exercises, sets and reps, or delete it.
 
-**Exercises.** 70 common exercises with step-by-step instructions and tips: 65 strength exercises with drawings of both positions, and 5 cardio machines. Filter by tapping the body map, by muscle, equipment or search. **Add your own** for anything missing; your own exercises have no drawing but log and chart the same way.
+**Exercises.** 92 common exercises with step-by-step instructions and tips: 80 strength exercises with drawings of both positions, 7 more without a drawing (such as the standing overhead press, hip thrust, face pull and plank), and 5 cardio machines. Filter by tapping the body map, by muscle, equipment or search. **Add your own** for anything missing; your own exercises have no drawing but log and chart the same way.
 
 **Progress.**
 
@@ -268,7 +270,7 @@ components/
   LineChart.tsx       SVG line chart with crosshair tooltip, sparkline
   BodyMap.tsx         front/back figure with clickable muscles
 lib/
-  exercises.ts        the 70 built-in exercises (5 cardio machines) and their guides
+  exercises.ts        the 92 built-in exercises (5 cardio machines) and their guides
   sports.ts           the sports, their fields and worked-out numbers
   bodyMap.ts          body map geometry
   stats.ts            1RM, series, previous sets, sets per muscle

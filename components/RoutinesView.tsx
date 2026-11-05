@@ -12,11 +12,13 @@ import { ExerciseThumb } from "./ExerciseArt";
 import ExercisePicker from "./ExercisePicker";
 import { IconDown, IconTrash, IconUp } from "./Icons";
 import Modal from "./Modal";
+import PremadePrograms from "./Premade";
 import RestSelect, { fmtRest } from "./RestSelect";
 
 export default function RoutinesView() {
   const { data, editingRoutineId, editRoutine, setData, attempt } = useApp();
   const editing = data.routines.find((r) => r.id === editingRoutineId);
+  const [view, setView] = useState<"mine" | "premade">(data.routines.length ? "mine" : "premade");
 
   const create = async () => {
     const r = await attempt(() => api.createRoutine("New routine"));
@@ -36,9 +38,29 @@ export default function RoutinesView() {
           New routine
         </button>
       </div>
-      {data.routines.length === 0 ? (
+      <div className="seg routines-seg" role="tablist" aria-label="Which routines">
+        {([["mine", `My routines${data.routines.length ? ` (${data.routines.length})` : ""}`], ["premade", "Premade"]] as const).map(([v, label]) => (
+          <button key={v} role="tab" aria-selected={view === v} className={view === v ? "on" : ""} onClick={() => setView(v)}>
+            {label}
+          </button>
+        ))}
+      </div>
+      {view === "premade" ? (
+        <>
+          <p className="muted">
+            Ready-made routines to copy into yours. Adding one makes your own copy, so change its exercises, sets and rest however you like.
+          </p>
+          <PremadePrograms />
+        </>
+      ) : data.routines.length === 0 ? (
         <section className="glass panel empty-panel">
-          <p>No routines yet. Create one, then tap muscles on the body map to fill it with exercises.</p>
+          <p>
+            No routines yet. Create one, then tap muscles on the body map to fill it with exercises, or{" "}
+            <button className="link-btn" onClick={() => setView("premade")}>
+              pick a premade one
+            </button>
+            .
+          </p>
         </section>
       ) : (
         <ul className="routine-list">
