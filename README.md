@@ -263,6 +263,7 @@ components/
   DayDialog.tsx       one day from the heatmap, with ways to log for it
   MoreProgress.tsx    bodyweight and sports panels on Progress
   RoutinesView.tsx    routine list and editor (body map + picker)
+  Premade.tsx         premade routines and programs, ready to copy in
   ExercisesView.tsx   exercise library and "Add your own"
   GuideDialog.tsx     exercise guide: drawings, muscles, steps, tips
   ProgressView.tsx    filters, chart, lifts, weekly muscles
@@ -271,6 +272,7 @@ components/
   BodyMap.tsx         front/back figure with clickable muscles
 lib/
   exercises.ts        the 92 built-in exercises (5 cardio machines) and their guides
+  templates.ts        the premade programs (Push / Pull / Legs, StrongLifts 5×5, …)
   sports.ts           the sports, their fields and worked-out numbers
   bodyMap.ts          body map geometry
   stats.ts            1RM, series, previous sets, sets per muscle
