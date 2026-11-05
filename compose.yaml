@@ -1,0 +1,47 @@
+name: liftlog
+
+# Shared settings. Override any of them in a .env file next to this one
+# (see .env.example for the full list).
+x-app-env: &app-env
+  TZ: ${TZ:-America/Vancouver}
+  PUSH_SUBJECT: ${PUSH_SUBJECT:-}
+
+services:
+  # Production build: docker compose up --build -d
+  web:
+    build:
+      context: .
+      target: runner
+    image: liftlog-next:latest
+    ports:
+      - "${LIFTLOG_PORT:-3070}:3000"
+    environment:
+      <<: *app-env
+      DB_PATH: /data/liftlog.db
+    volumes:
+      # Accounts, routines and workouts. The named volume is created owned by
+      # the container's user, so SQLite can write to it.
+      - liftlog-data:/data
+    restart: unless-stopped
+
+  # Hot-reload dev server: docker compose --profile dev up --build dev
+  dev:
+    profiles: ["dev"]
+    build:
+      context: .
+      target: dev
+    ports:
+      - "${LIFTLOG_DEV_PORT:-3071}:3000"
+    environment:
+      <<: *app-env
+      DB_PATH: /app/data/dev.db
+      # File watching through a Windows bind mount needs polling
+      WATCHPACK_POLLING: "true"
+      CHOKIDAR_USEPOLLING: "true"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+
+volumes:
+  liftlog-data:
